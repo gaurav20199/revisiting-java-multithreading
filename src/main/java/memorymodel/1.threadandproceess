@@ -1,0 +1,56 @@
+Thread
+Threads are fundamental unit of execution within a process. It allow multiple program to execute concurrently.
+Smallest sequence of instructions that are executed by CPU independently.
+Thread can utilize multi core processors efficiently and improve overall performance.
+Eg: If we have like 4 core system then 4 Threads can run simultaneously(at the same time, parallely).
+At one time, within a core we can run multiple threads concurrently(i.e they are doing context swotching and appearing to be executing
+simultaneously but they are not)
+
+Process
+Process is an instance of the Program which is getting executed.
+It has it(s) own resource like memory, thread etc. OS allocates these resources to the Process when it's created.
+
+In Java, after compiling the code(using javac ExampleClass.java), when we execute the code using java ExampleClass then JVM
+creates a new process it will be assigned it(s) own heap memory. After the process is created, it starts with 1 Thread which is the main thread.
+
+Process vs Thread(check processvsthread.png )
+
+Suppose we are baking a cake that will be considered as a process. Now, the person who is baking actually in the house is the Thread.
+
+Now suppose instead of a single person, all the family members join in for the baking process then there will be multiple threads and
+baking will be done in less time now.
+
+Now baking cake in itself is a big process, we can actually divide it into multiple small tasks:
+1) Getting the ingredients
+2) Mixing
+3) baking
+4) Serving
+
+1st way: We perform the tasks sequentially i.e we get the ingredients from the market, we prepare the dough, we preheat the oven, we bake it and then we serve it.
+If a single person(thread) is doing all these then ofcourse it will take time.
+
+2nd way: Now every person has picked up one task(suppose all of the sub tasks are independent of each other) then the baking process will be much faster. Here multiple threads will be working.
+
+When to Use Processes vs Threads 🤔
+
+Use Processes When: 
+You need strong isolation between different parts of an application 
+Running completely independent tasks 
+Leveraging multiple CPU cores for separate computational tasks 
+ ‍
+
+Real Life Examples :  
+🖥 Web Browsers: Modern browsers like Chrome run each tab as a separate process to ensure one crashing tab doesn’t affect others. 
+📸 Image Processing Pipelines: Applications like Photoshop or video editors use multiple processes to handle large computations separately. 
+🎮 Game Engines: Physics simulations and AI computations in games run in separate processes to utilize multiple CPU cores efficiently. 
+‍
+
+Use Threads When: 
+You need to perform multiple tasks within the same application 
+Tasks need to share common data quickly 
+You want to improve responsiveness and performance of a single application 
+
+
+
+
+
