@@ -1,0 +1,35 @@
+ Question:: Multithreading VS Multitasking in Java
+
+Multitasking is the ability of an operating system to execute multiple processes (programs) simultaneously by sharing CPU resources among them.
+In Java, multitasking refers to running multiple Java processes at the same time, each with its own JVM instance and memory space.
+The OS schedules CPU time among these processes, allowing them to appear as if they are running in parallel, even on a single-core processor.
+Since MultiTasking is between two different processes(which are indepenedent of each other) hence they don't share any resource.
+
+Multithreading
+Multithreading is the ability of a single Java process (application) to execute multiple threads concurrently or parallely too(depends on cpu cores).
+Multithreading allows a program to perform multiple tasks at once, such as handling user input, processing data, and performing background operations, all within a single application
+ 
+ 
+ Question: Difference between start and run thread
+ 
+ start api of Thread creates a new Thread, the logic provided in run method gets executes in a new Thread.
+ This enables true MultiThreading.
+ It can be called only once per Thread object.
+
+ Run api is defined in Runnable interface. It doesn't creates a new thread, the logic provided in the run method executes in the calling thread.
+ No multithreading here, runs sequenitally.
+ It can be called multiple times.
+
+
+ Important Difference:
+ We call start from our code, JVM will create a new Thread and then run method is executed within that new thread created.
+ If we call run() directly, it simply executes in the current thread, just like a regular method call, and no new thread is created.
+
+
+ Question: Can we call the start() method twice on the same Thread object? 
+ No, calling start() twice on the same Thread object will throw an IllegalThreadStateException. A thread that has completed execution cannot be restarted.
+
+ Question: What happens if an exception occurs in a thread's run method? 
+ If an uncaught exception occurs in a thread's run() method, the thread terminates. The exception doesn't propagate to the parent thread.
+ For eg: From main Thread you started one new thread and in the run method it encountered some error. This will not effect main thread though and it will be executed as it is.
+

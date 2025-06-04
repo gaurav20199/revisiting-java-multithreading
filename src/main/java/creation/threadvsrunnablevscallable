@@ -1,0 +1,62 @@
+
+For creating a thread there are 3 methods:
+1) By extending to Thread class.
+2) By implementing Runnable interface.
+3) Using Callable interface along with Executor framework.
+
+Advantages of extending Thread Class:
+1) Easier to create the thread as less code is required.
+2) Thread class internally is implementing Runnable Interface.
+
+IMP: If extending Thread class then we should always override the run method since in the parent class(Thread class) run implementation is only for runnable objects. If we are not overiding the run method and extending the Thread class then run method of Parent class(Thread class) will get executed but it will not do anything.
+
+Cons:
+1) Not suitable for prod applications since Java doesn't allow Multiple inheritence and if a given class already extended Thread class they can't extend any other class.
+2) Each task requires a new thread instance.
+
+Advantage of implementing Runnable Interface:
+1) Allows class to extend other classes.
+2) Better object-oriented design
+3) Same runnable instance can be shared among multiple threads.
+
+Explanation of Same runnable instance can be shared among multiple threads
+
+Shared State: Any fields (instance variables) defined in the Runnable object will be shared among all threads using that instance. This means all threads will access and potentially modify the same data, leading to shared state and possible race conditions if not handled properly.
+
+Resource Sharing: This approach is useful when we want multiple threads to work together on shared data or resources, as they all operate on the same object.
+
+Thread Safety: If the shared Runnable contains mutable fields, we have to must thread safety using synchronization or other concurrency mechanisms, otherwise inconsistent or unpredictable results may occur.
+
+Limitations of both Thread and Runnable approach:
+If suppose we want to have something returned from the method executing our task that can't be done through these ways.
+
+Callable Interface
+Callable interface was introduced in Java 5 and it resolved this issue. It can also throw checked execptions as well.
+
+Checked vs Unchecked Exceptions in Java :  
+Checked Exceptions :  
+Checked exceptions are exceptions that must be either declared in the method signature using throws or handled using try-catch. 
+They are checked at compile-time. 
+Examples: 
+IOException (e.g., file not found) 
+SQLException (e.g., database connection failure) 
+InterruptedException (e.g., thread interruption) 
+ ‍
+
+Unchecked Exceptions :  
+Unchecked exceptions are runtime errors that do not require explicit handling. 
+They are checked at runtime, meaning they occur due to logical errors in the program. 
+Examples: 
+NullPointerException (e.g., calling a method on null) 
+ArrayIndexOutOfBoundsException (e.g., accessing an invalid array index) 
+ArithmeticException (e.g., division by zero) 
+ ‍
+
+Key Difference: 
+Checked exceptions enforce error handling at compile-time, while unchecked exceptions indicate programming mistakes that occur at runtime. 🚀 
+
+
+
+
+
+
