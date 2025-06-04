@@ -1,0 +1,50 @@
+
+On Execution of Java code, JVM creates a process. For Each Java process a JVM instance is allocated with it. This JVM instance has
+Heap Memory, Stack, Code Area and other memory spaces(refer the image).
+The JVM executes the loaded bytecode. Initially, the bytecode may be interpreted, but for frequently executed code, the Just-In-Time (JIT) compiler translates bytecode into native machine code at runtime for better performance.
+This JVM instance loads the classes, executes the code, and manages resources independently from any other JVM instances running on the system.
+
+How to decide what memory will be used by JVM instance??
+
+java -Xms256m -Xmx2g <ClassName>
+
+-Xms<size> --> This will be the initial heap size. Above it's 256 mb.
+-Xmx<size> --> This will be the max heap size process can get above. Above it's 2GB. If instance will try to take more than this memory Out of Memory error will come.
+
+
+Common memory spaces used by Thread:
+1) Register -> Independent space of a Thread, not used by other Threads. It is used by JVM to optimize the generated machine code(generated through JIT compiler/Interpreter).
+Register also helps in Context Switching by storing the intermediate result of a particular Thread.
+
+2) Stack -> Independent space of a Thread, not used by other Threads. It manages method calls, local variables.
+
+3) Counter -> Independent space of a Thread, not used by other Threads. It stores the memory address of the next instruction which needs to be executed. It also increments the counter after successfull execution of the instruction.
+
+4) Code segment->  JVM stores thee generated native code—that is, the machine code produced by the Just-In-Time (JIT) compiler from Java bytecode. It is read only and hence it doesn't require thread safety. It is shared among all the Threads of the same process.
+
+5) Data segment -> Contains global and static data. Shared among all the Threads of the same process. Threads can read and modify the same data and hence it requires thread safety.
+
+6) Heap -> All objects created with new keyword resides in the Heap. It is shared among all the threads of the same process.
+
+
+Code Flow:
+1) Java Program is executed, a new Java process gets created by OS. A JVM instance is created, JIT or Interpreter comes in the picture and converts bytecode to native machine code.
+2) This native code gets stored in code segment. The method looks for main method to execute the code line by line. By Default main thread is spawn.
+3) Suppose there were 2 more threads being started in the main thread.
+4) Fetch Decode Execute Cycle gets Triggered
+
+4.1) Fetch: The CPU uses a special register called the Program Counter (PC), which holds the address of the next instruction to execute. The PC's value is copied to the Memory Address Register (MAR).
+
+4.2) The CPU sends this address to main memory and fetches the instruction, which is then loaded into the Memory Buffer Register (MBR) or similar temporary register.
+
+4.3) The instruction is moved from the MBR to the Instruction Register (IR).
+
+4.4) Decode: The Control Unit decodes the instruction in the IR to determine what needs to be done.
+
+4.5) Execute: The CPU executes the instruction, using its registers and ALU (Arithmetic Logic Unit) as needed.
+
+4.6) The PC is updated to point to the next instruction, and the cycle repeat.
+
+5) Suppose there is only one core cpu in our machine and there are 3 threads(main, 2 threads created in main). Now there can be scnearios that CPU has to context switch between all these threads after every one second. The computation already done on a particular thread gets stored in it's own Thread Register, thus helping in context switching and CPU can also refer to the information stored in the Thread Register when that same Thread will be executed next time.
+
+6) Which Thread has to be Scheduled is decided by OS Scheduler. JVM Scheduler is only managed by OS. Thus we can say, it's being managed by OS Scheduler only.
