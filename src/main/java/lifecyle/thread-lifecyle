@@ -1,0 +1,47 @@
+Thread Lifecycle:
+1) New State: When Thread gets just created in Java then it's in new State.
+For eg: MyThread thread = new MyThread(); // Here MyThread is extending Thread class.
+When we initialise the thread then thread gets created in Java. On OS Level, thread gets created when start is called on it.
+
+2.1) Runnable State: Thread is ready to run and waiting for CPU Time.
+2.2) Running State: Thread gets the CPU Time and is executing the code now. Once there is context switch and CPU is giving time
+other thread then this thread again goes in Runnable state.
+
+Both Runnable and Running state are usually combined and is being called as one state(Runnable).
+
+In Runnable state, a given Thread can put the Monitor lock.
+
+3) Blocked: When a thread is in Runnable(combined state) it can go in blocked state in multiple scenarios.
+ 3.1) I/O Operation: When the thread is performing our logic and there is some I/O work for suppose, it has to read some data from
+     the db so thread is in the blocked state. Once I/O is done it goes back to Runnable state.
+ 3.2) Lock Scenario: When the thread is performing out logic and our logic has to take lock on some resouce. But lock is already
+      been taken on it by any other thread/resource then our thread has to wait for the lock to get released. Once it gets the lock
+      on the resouce it comes back to the Runnable state.
+
+     Whenever Thread goes to Blocked state it releases all the Monitor locks. 
+
+4) Waiting: When we call the wait api of Thread explicitly then Thread goes in the waiting state. Once notify, notifyAll is called then the thread
+            comes again to the Runnable state.
+
+     Whenever Thread goes to Waiting state it releases all the Monitor locks.        
+
+5) Timed Waiting: For a particular time, thread will be waiting and after that Thread will go to Runnable state.
+   Eg: When we call Sleep api and pass in 5s, then thread will be in timed waiting state for 5 secs and after that it goes to Runnable state.  
+    
+    Whenever Thread goes to Timed Waiting state it does not released the monitor locks.
+
+6) Terminated: At any given state, we can call stop api of Thread and Thread will be stopped and will be in Terminated State.
+               Once Terminated, thread can never go back to the Runnable state. 
+
+
+What are Monitor Lock???
+It helps to ensure that only one Thread goes inside a particular section of code(a synchronized block or method).
+Every object in Java is associated with a monitor (also called an intrinsic lock or monitor lock).
+This lock is used by the JVM to implement synchronized blocks and methods
+The lock is not a separate field in the object; it is a JVM-level construct associated with every object instance
+For static synchronized methods or synchronized used on Class level, the lock is associated with the Class object representing the class.
+
+Key Points
+Instance synchronized method (public synchronized void method()) acquires the lock on the current object instance (this), not the class-level lock.
+
+Static synchronized method (public static synchronized void method()) acquires the lock on the Class object (i.e., the class-level lock).
